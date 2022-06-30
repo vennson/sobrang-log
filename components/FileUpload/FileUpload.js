@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import JSONPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/monikai.css'
+import { ResizableBox } from 'react-resizable'
 
 import styles from './FileUpload.module.css'
 
@@ -89,9 +90,10 @@ export default function FileUpload() {
             <option value='DEBUG'>DEBUG</option>
           </select>
         </div>
+        <div className={styles.divider}></div>
       </div>
+      <JSONPretty className={styles.content} data={filteredContent} />
       <div className={styles.divider}></div>
-      <JSONPretty data={filteredContent} />
       <JSONPretty data={error} />
     </div>
   )

@@ -1,10 +1,15 @@
 .root {
-  padding-top: 5px;
+  /* padding-top: 5px; */
 }
 
 .inputs {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  width: 100%;
+  background-color: #272822;
+  top: 0;
+  padding-top: 5px;
 }
 
 .fileInput {
@@ -38,5 +43,9 @@
 }
 
 .content {
-  margin-bottom: 10px;
+  margin-top: 90px;
+  resize: vertical;
+  /* overflow: auto; */
+  height: 80vh;
+  overflow: auto;
 }

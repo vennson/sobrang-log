@@ -16,3 +16,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.__json-pretty__ {
+  overflow: visible !important;
+}

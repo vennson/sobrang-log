@@ -13,7 +13,8 @@
     "react": "18.2.0",
     "react-code-prettify": "^0.0.1",
     "react-dom": "18.2.0",
-    "react-json-pretty": "^2.2.0"
+    "react-json-pretty": "^2.2.0",
+    "react-resizable": "^3.0.4"
   },
   "devDependencies": {
     "eslint": "8.18.0",
