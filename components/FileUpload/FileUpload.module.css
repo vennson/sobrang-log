@@ -2,8 +2,41 @@
   padding-top: 5px;
 }
 
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.fileInput {
+  margin-bottom: 5px;
+}
+
+.dateTimeInput {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  width: 250px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.textInput {
+  width: 200px;
+  text-align: right;
+}
+
+.select {
+  width: 100px;
+}
+
 .divider {
   height: 1px;
   background-color: gray;
   margin-top: 7px;
+}
+
+.content {
+  margin-bottom: 10px;
 }
