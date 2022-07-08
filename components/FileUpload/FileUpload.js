@@ -17,9 +17,13 @@ export default function FileUpload() {
   }
 
   const splitJsonError = (string) => {
-    let splitted = string.split('Process ')
+    let splitted = string.split('Process Process-1:')
     let json = splitted[0]
-    let error = 'Process ' + splitted[1]
+    let error = ''
+
+    if (splitted[1]) {
+      error = 'Process Process-1:' + splitted[1]
+    }
     return [json, error]
   }
 
@@ -34,7 +38,12 @@ export default function FileUpload() {
       text = json
       text = replaceAllButLast(text, '}', '},')
       text = text.replaceAll('},}', '}}')
+      text = text.replaceAll('},]', '}]')
+      text = text.replaceAll('}},}', '}}}')
       text = text.replaceAll(',,', ',')
+
+      console.log('text', text)
+
       setContent(JSON.parse(`[${text}]`))
       setError(error)
     }
