@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import JSONPretty from 'react-json-pretty'
 import 'react-json-pretty/themes/monikai.css'
-import { ResizableBox } from 'react-resizable'
+import clsx from 'clsx'
 
 import styles from './FileUpload.module.css'
 
@@ -9,7 +9,11 @@ export default function FileUpload() {
   const [content, setContent] = useState([])
   const [filteredContent, setFilteredContent] = useState('')
   const [error, setError] = useState('')
-  const [filters, setFilters] = useState({ time: '', level: '' })
+  const [filters, setFilters] = useState({
+    timeFrom: '',
+    timeTo: '',
+    level: '',
+  })
 
   const replaceAllButLast = (string, token, newToken) => {
     const parts = string.split(token)
@@ -42,50 +46,85 @@ export default function FileUpload() {
       text = text.replaceAll('}},}', '}}}')
       text = text.replaceAll(',,', ',')
 
-      console.log('text', text)
-
       setContent(JSON.parse(`[${text}]`))
       setError(error)
     }
     reader.readAsText(e.target.files[0])
   }
 
-  const handleTimeChange = (e) => {
-    setFilters({ ...filters, time: e.target.value })
+  const handleTimeFrom = (e) => {
+    if (e.target.value) {
+      setFilters({
+        ...filters,
+        timeFrom: new Date(e.target.value.replace(',', '.')),
+      })
+    } else {
+      setFilters({ ...filters, timeFrom: '' })
+    }
+  }
+
+  const handleTimeTo = (e) => {
+    if (e.target.value) {
+      setFilters({
+        ...filters,
+        timeTo: new Date(e.target.value.replace(',', '.')),
+      })
+    } else {
+      setFilters({ ...filters, timeTo: '' })
+    }
   }
 
   const handleLevelChange = (e) => {
-    console.log('e.target.value', e.target.value)
     setFilters({ ...filters, level: e.target.value })
   }
 
   useEffect(() => {
     if (content.length) {
       const newContent = content.filter((item) => {
-        console.log('item.level', item.level)
-        return (
-          item.time.includes(filters.time) && item.level.includes(filters.level)
-        )
+        if (filters.timeFrom && filters.timeTo) {
+          return (
+            new Date(item.time.replace(',', '.')) >= filters.timeFrom &&
+            new Date(item.time.replace(',', '.')) <= filters.timeTo &&
+            item.level.includes(filters.level)
+          )
+        } else if (filters.timeFrom) {
+          return (
+            new Date(item.time.replace(',', '.')) >= filters.timeFrom &&
+            item.level.includes(filters.level)
+          )
+        } else if (filters.timeTo) {
+          return (
+            new Date(item.time.replace(',', '.')) <= filters.timeTo &&
+            item.level.includes(filters.level)
+          )
+        } else {
+          return item.level.includes(filters.level)
+        }
       })
       setFilteredContent(newContent)
     }
   }, [filters, content])
-
-  console.log('filteredContent', filteredContent.length)
 
   return (
     <div className={styles.root}>
       <div className={styles.inputs}>
         <input type='file' className={styles.fileInput} onChange={handleShow} />
         <div className={styles.dateTimeInput}>
-          <div className={styles.text}>Time: </div>
+          <div className={styles.text}>Time </div>
+          <div className={styles.label}>from: </div>
           <input
             type='text'
             className={styles.textInput}
-            onChange={handleTimeChange}
+            onChange={handleTimeFrom}
+          />
+          <div className={clsx(styles.label, styles.to)}>to: </div>
+          <input
+            type='text'
+            className={styles.textInput}
+            onChange={handleTimeTo}
           />
         </div>
-        <div className={styles.dateTimeInput}>
+        <div className={styles.levelInput}>
           <div className={styles.text}>Level: </div>
           <select
             className={styles.select}

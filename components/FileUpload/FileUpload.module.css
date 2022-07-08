@@ -18,13 +18,30 @@
 
 .dateTimeInput {
   display: flex;
-  justify-content: space-between;
   gap: 5px;
-  width: 250px;
+  margin-bottom: 5px;
+}
+
+.dateTimeInput .text {
+  margin-right: 10px;
+}
+
+.levelInput {
+  display: flex;
+  gap: 10px;
+  width: 500px;
 }
 
 .text {
   font-size: 14px;
+}
+
+.label {
+  font-size: 14px;
+}
+
+.to {
+  margin-left: 10px;
 }
 
 .textInput {
